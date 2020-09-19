@@ -19,11 +19,11 @@ void display2()
 {printf("\n\n\n\tEnter your choise: ");
  scanf("%d",&choice);
  switch (choice)
-{case 1:
+{case 1:printf("\tYour password is very less secure");
         break;
- case 2:
+ case 2:printf("\tYour password is somewhat secure");
          break;
- case 3:
+ case 3:printf("\tYour password is highly secure");
          break;
  case 4: exit(0);  
          break; 
