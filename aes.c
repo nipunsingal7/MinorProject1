@@ -1,9 +1,9 @@
-<<<<<<< HEAD
+
 void AddRoundKey(unsigned char * state, unsigned char * roundKey) {
 	for (int i = 0; i < 16; i++) {
 		state[i] ^= roundKey[i];
 	}
-=======
+	
 void rowshift(unsigned char * cipher)
 {
    unsigned char temp[16];
@@ -36,5 +36,4 @@ for (int i=0; i<16; i++)
 {
     cipher[i]=temp[i];
 }
->>>>>>> bd2c76538725bb6930acfe22fa417f7ae45e5a50
 }
