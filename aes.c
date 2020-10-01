@@ -1,3 +1,18 @@
+char key[16]={"AAAAAA111111qqqq"};
+
+
+void xor(char *text,char *key1);
+
+
+
+void xor(char *text,char *key1)
+{
+	for (int i=0; i<16;i++)
+	{	text[i]=text[i] ^key1[i];}
+}
+
+
+
 
 	
 void rowshift(unsigned char * cipher)
@@ -32,6 +47,17 @@ for (int i=0; i<16; i++)
 {
     cipher[i]=temp[i];
 }
+}
+
+
+
+
+
+void AES()
+{xor(cipher,key);
+
+
+
 }
 
 

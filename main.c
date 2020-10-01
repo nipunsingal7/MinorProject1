@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
+char cipher[16];
 int choice=0;
 void display()
 {printf("\n\n\n\n\n\t\t\t\t\t\t\t\t    Welcome To\t\t\t\t\t\t\t\t\t");
@@ -12,7 +14,9 @@ void display()
 }
 
 void display2()
-{printf("\n\n\n\tPlease choose the option:");
+{printf("Enter the password: ");
+ scanf("%s",cipher); 
+ printf("\n\n\n\tPlease choose the option:");
  printf("\n\n\t1)Only encryption\n\t2)Encryption + Hashing\n\t3)Triple Crypt\n\t4)Exit\n\n\tnote:It is recomended to use Triple Crypt for high security");
  
  while(choice!=4)
