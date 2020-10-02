@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-char cipher[16];
+unsigned char cipher[16];
 int choice=0;
 void display()
 {printf("\n\n\n\n\n\t\t\t\t\t\t\t\t    Welcome To\t\t\t\t\t\t\t\t\t");
