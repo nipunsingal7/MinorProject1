@@ -1,5 +1,5 @@
 char key[16]={"AAAAAA111111qqqq"};
-
+char hex[32];
 
 void xor(char *text,char *key1);
 
@@ -7,8 +7,11 @@ void xor(char *text,char *key1);
 
 void xor(char *text,char *key1)
 {
-	for (int i=0; i<16;i++)
-	{	text[i]=text[i] ^key1[i];}
+	for (int i=0,m=0; i<16;i++,m+=2)
+	{	text[i]=text[i] ^key1[i];
+	     sprintf((char*)hex+m,"%02X",text[i]);
+	
+	}
 }
 
 
