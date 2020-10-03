@@ -141,7 +141,25 @@ void mixcolumns(unsigned char *text3)
     temp[6]= text3[2] ^ m2[(int)text3[6]] ^ m3[(int)text3[10]] ^ text3[14];
     temp[7]= text3[3] ^ m2[(int)text3[7]] ^ m3[(int)text3[11]] ^ text3[15];
 
+    //3rd row
+    temp[8]= text3[0] ^ text3[4] ^ m2[(int)text3[8]] ^ m3[(int)text3[12]];
+    temp[9]= text3[1] ^ text3[5] ^ m2[(int)text3[9]] ^ m3[(int)text3[13]];
+    temp[10]= text3[2] ^ text3[6] ^ m2[(int)text3[10]] ^ m3[(int)text3[14]];
+    temp[11]= text3[3] ^ text3[7] ^ m2[(int)text3[11]] ^ m3[(int)text3[15]];
 
+    //4th row
+    temp[12]= m3[(int)text3[0]] ^ text3[4] ^ text3[8] ^ m2[(int)text3[12]];
+    temp[13]= m3[(int)text3[1]] ^ text3[5] ^ text3[9] ^ m2[(int)text3[13]];
+    temp[14]= m3[(int)text3[2]] ^ text3[6] ^ text3[10] ^ m2[(int)text3[14]];
+    temp[15]= m3[(int)text3[3]] ^ text3[7] ^ text3[11] ^ m2[(int)text3[15]];
+
+    for(int l=0;l<16;l++)
+    { text3[l]=temp[l];
+
+    }
+
+
+}
 
 
 
