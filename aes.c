@@ -84,7 +84,20 @@ void shiftrow(unsigned char *text2)
   }
 }
 	
+void mixcolumns(unsigned char *text3)
+{ unsigned char temp[16];
 
+    //1st row
+   temp[0]= m2[(int)text3[0]] ^ m3[(int)text3[4]] ^ text3[8] ^ text3[12];
+   temp[1]= m2[(int)text3[1]] ^ m3[(int)text3[5]] ^ text3[9] ^ text3[13];
+   temp[2]= m2[(int)text3[2]] ^ m3[(int)text3[6]] ^ text3[10] ^ text3[14];
+   temp[3]= m2[(int)text3[3]] ^ m3[(int)text3[7]] ^ text3[11] ^ text3[15];
+
+   //2nd row
+    temp[4]= text3[0] ^ m2[(int)text3[4]] ^ m3[(int)text3[8]] ^ text3[12];
+    temp[5]= text3[1] ^ m2[(int)text3[5]] ^ m3[(int)text3[9]] ^ text3[13];
+    temp[6]= text3[2] ^ m2[(int)text3[6]] ^ m3[(int)text3[10]] ^ text3[14];
+    temp[7]= text3[3] ^ m2[(int)text3[7]] ^ m3[(int)text3[11]] ^ text3[15];
 
 
 
