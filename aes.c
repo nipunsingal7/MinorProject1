@@ -228,7 +228,7 @@ for(int a=0;a<16;a++)
 
 
 
-void aes()
+void aes(unsigned char *cipher)
 {
 
     roundkey(cipher,key);              //1st round
