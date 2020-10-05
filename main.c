@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "aes.c"
 
 unsigned char cipher[16];
 int choice=0;
@@ -17,13 +18,16 @@ void display2()
 {printf("Enter the password: ");
  scanf("%s",cipher); 
  printf("\n\n\n\tPlease choose the option:");
- printf("\n\n\t1)Only encryption\n\t2)Encryption + Hashing\n\t3)Triple Crypt\n\t4)Exit\n\n\tnote:It is recomended to use Triple Crypt for high security");
+ printf("\n\n\t1)Only encryption\n\t2)Encryption + salting\n\t3)Triple Crypt\n\t4)Exit\n\n\tnote:It is recomended to use Triple Crypt for high security");
  
  while(choice!=4)
 {printf("\n\n\n\tEnter your choise: ");
  scanf("%d",&choice);
  switch (choice)
-{case 1:printf("\tYour password is very less secure");
+{case 1:printf("\n\n\tYour password is very less secure");
+        aes();
+        printf("\nEncrypted message is: ");
+        puts(cipher);
         break;
  case 2:printf("\tYour password is somewhat secure");
          break;
