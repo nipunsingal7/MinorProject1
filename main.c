@@ -25,9 +25,13 @@ void display2()
  scanf("%d",&choice);
  switch (choice)
 {case 1:printf("\n\n\tYour password is very less secure");
-        aes();
-        printf("\nEncrypted message is: ");
-        puts(cipher);
+        aes(cipher);
+        printf("\n\n\tEncrypted message is: ");
+        for(int l=0;l<16;l++)
+        {
+          printf("%02X",cipher[l]);
+
+        }
         break;
  case 2:printf("\tYour password is somewhat secure");
          break;
