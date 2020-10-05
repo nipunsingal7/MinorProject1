@@ -1,4 +1,14 @@
-unsigned char key[16]={"AAAAAA111111qqqq"};
+void subbytes(unsigned char *text1);
+void roundkey(unsigned char *text,unsigned char *key1);
+void mixcolumns(unsigned char *text3);
+void keyexpansion(unsigned char *key0, int z);
+void shiftrow(unsigned char *text2);
+
+
+
+
+unsigned char key[16]={0x41,0x41,0x41,0x41,0x41,0x41,0x31,0x31,0x31,0x31,0x31,0x31,0x71,0x71,0x71,0x71};
+
 
 
 unsigned char s[256] =
@@ -13,13 +23,15 @@ unsigned char s[256] =
 	0x51, 0xA3, 0x40, 0x8F, 0x92, 0x9D, 0x38, 0xF5, 0xBC, 0xB6, 0xDA, 0x21, 0x10, 0xFF, 0xF3, 0xD2,
 	0xCD, 0x0C, 0x13, 0xEC, 0x5F, 0x97, 0x44, 0x17, 0xC4, 0xA7, 0x7E, 0x3D, 0x64, 0x5D, 0x19, 0x73,
 	0x60, 0x81, 0x4F, 0xDC, 0x22, 0x2A, 0x90, 0x88, 0x46, 0xEE, 0xB8, 0x14, 0xDE, 0x5E, 0x0B, 0xDB,
-        0xE0, 0x32, 0x3A, 0x0A, 0x49, 0x06, 0x24, 0x5C, 0xC2, 0xD3, 0xAC, 0x62, 0x91, 0x95, 0xE4, 0x79,
+	0xE0, 0x32, 0x3A, 0x0A, 0x49, 0x06, 0x24, 0x5C, 0xC2, 0xD3, 0xAC, 0x62, 0x91, 0x95, 0xE4, 0x79,
 	0xE7, 0xC8, 0x37, 0x6D, 0x8D, 0xD5, 0x4E, 0xA9, 0x6C, 0x56, 0xF4, 0xEA, 0x65, 0x7A, 0xAE, 0x08,
 	0xBA, 0x78, 0x25, 0x2E, 0x1C, 0xA6, 0xB4, 0xC6, 0xE8, 0xDD, 0x74, 0x1F, 0x4B, 0xBD, 0x8B, 0x8A,
 	0x70, 0x3E, 0xB5, 0x66, 0x48, 0x03, 0xF6, 0x0E, 0x61, 0x35, 0x57, 0xB9, 0x86, 0xC1, 0x1D, 0x9E,
 	0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
 	0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
+
+
 
 // Multiply by 2 for MixColumns
 unsigned char m2[256] =
@@ -41,6 +53,9 @@ unsigned char m2[256] =
 	0xdb,0xd9,0xdf,0xdd,0xd3,0xd1,0xd7,0xd5,0xcb,0xc9,0xcf,0xcd,0xc3,0xc1,0xc7,0xc5,
 	0xfb,0xf9,0xff,0xfd,0xf3,0xf1,0xf7,0xf5,0xeb,0xe9,0xef,0xed,0xe3,0xe1,0xe7,0xe5
 };
+
+
+
 
 // Multiply by 3 for MixColumns
 unsigned char m3[256] =
@@ -64,27 +79,37 @@ unsigned char m3[256] =
 };
 
 
-void xor(unsigned char *text,unsigned char *key1);
-void sbox(unsigned char *text1);
-void shiftrow(unsigned char *text2);
-void mixcolumns(unsigned char *text3);
 
 
-void xor(unsigned char *text,unsigned char *key1)
+//rcon table
+unsigned char rcon[10]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x1B,0x36};
+
+
+
+
+
+void roundkey(unsigned char *text,unsigned char *key1)
 {
-	for (int i=0;i<16;i++)
-	{   text[i]=text[i]^key1[i];
-	    
+	for (int i=0; i<16;i++)
+	{	text[i]=text[i] ^ key1[i];
+
+
+
 	}
+
+
+
 }
 
 
-
-void sbox(unsigned char *text1)
+void subbytes(unsigned char *text1)
 {  for(int g=0;g<16;g++)
    {int value= (int) text1[g];
       text1[g]=s[value];
+
+
    }
+
 
 }
 
@@ -92,32 +117,32 @@ void sbox(unsigned char *text1)
 void shiftrow(unsigned char *text2)
 { unsigned char temp[16];
 
- //1st row, nothing happens
- temp[0]=text2[0];
- temp[1]=text2[1];
- temp[2]=text2[2];
- temp[3]=text2[3];
+ 
+ temp[0]=text2[0];                                        //1st row, nothing happens
+ temp[1]=text2[5];                                         //2nd row, 1 shift  
+ temp[2]=text2[10];                                        //3rd row, 2 shift
+ temp[3]=text2[15];                                        //4th row, 3 shift
 
- //2nd row, 1 shift
 
-  temp[4]=text2[7];
-  temp[5]=text2[4];
-  temp[6]=text2[5];
-  temp[7]=text2[6];
 
-  //3rd row, 2 shift
+  temp[4]=text2[4];
+  temp[5]=text2[9];
+  temp[6]=text2[14];
+  temp[7]=text2[3];
 
-  temp[8]=text2[10];
-  temp[9]=text2[11];
-  temp[10]=text2[8];
-  temp[11]=text2[9];
+  
 
-  //4th row, 3 shift
+  temp[8]=text2[8];
+  temp[9]=text2[13];
+  temp[10]=text2[2];
+  temp[11]=text2[7];
 
-  temp[12]=text2[13];
-  temp[13]=text2[14];
-  temp[14]=text2[15];
-  temp[15]=text2[12];
+  
+
+  temp[12]=text2[12];
+  temp[13]=text2[1];
+  temp[14]=text2[6];
+  temp[15]=text2[11];
 
 
   for(int f=0;f<16;f++)
@@ -125,33 +150,35 @@ void shiftrow(unsigned char *text2)
 
   }
 }
-	
+
+
+
 void mixcolumns(unsigned char *text3)
 { unsigned char temp[16];
 
-    //1st row
-   temp[0]= m2[(int)text3[0]] ^ m3[(int)text3[4]] ^ text3[8] ^ text3[12];
-   temp[1]= m2[(int)text3[1]] ^ m3[(int)text3[5]] ^ text3[9] ^ text3[13];
-   temp[2]= m2[(int)text3[2]] ^ m3[(int)text3[6]] ^ text3[10] ^ text3[14];
-   temp[3]= m2[(int)text3[3]] ^ m3[(int)text3[7]] ^ text3[11] ^ text3[15];
+    //1st column
+   temp[0]= m2[(int)text3[0]] ^ m3[(int)text3[1]] ^ text3[2] ^ text3[3];
+   temp[4]= m2[(int)text3[4]] ^ m3[(int)text3[5]] ^ text3[6] ^ text3[7];
+   temp[8]= m2[(int)text3[8]] ^ m3[(int)text3[9]] ^ text3[10] ^ text3[11];
+   temp[12]= m2[(int)text3[12]] ^ m3[(int)text3[13]] ^ text3[14] ^ text3[15];
 
-   //2nd row
-    temp[4]= text3[0] ^ m2[(int)text3[4]] ^ m3[(int)text3[8]] ^ text3[12];
-    temp[5]= text3[1] ^ m2[(int)text3[5]] ^ m3[(int)text3[9]] ^ text3[13];
-    temp[6]= text3[2] ^ m2[(int)text3[6]] ^ m3[(int)text3[10]] ^ text3[14];
-    temp[7]= text3[3] ^ m2[(int)text3[7]] ^ m3[(int)text3[11]] ^ text3[15];
+   //2nd column
+    temp[1]= text3[0] ^ m2[(int)text3[1]] ^ m3[(int)text3[2]] ^ text3[3];
+    temp[5]= text3[4] ^ m2[(int)text3[5]] ^ m3[(int)text3[6]] ^ text3[7];
+    temp[9]= text3[8] ^ m2[(int)text3[9]] ^ m3[(int)text3[10]] ^ text3[11];
+    temp[13]= text3[12] ^ m2[(int)text3[13]] ^ m3[(int)text3[14]] ^ text3[15];
 
-    //3rd row
-    temp[8]= text3[0] ^ text3[4] ^ m2[(int)text3[8]] ^ m3[(int)text3[12]];
-    temp[9]= text3[1] ^ text3[5] ^ m2[(int)text3[9]] ^ m3[(int)text3[13]];
-    temp[10]= text3[2] ^ text3[6] ^ m2[(int)text3[10]] ^ m3[(int)text3[14]];
-    temp[11]= text3[3] ^ text3[7] ^ m2[(int)text3[11]] ^ m3[(int)text3[15]];
+    //3rd column
+    temp[2]= text3[0] ^ text3[1] ^ m2[(int)text3[2]] ^ m3[(int)text3[3]];
+    temp[6]= text3[4] ^ text3[5] ^ m2[(int)text3[6]] ^ m3[(int)text3[7]];
+    temp[10]= text3[8] ^ text3[9] ^ m2[(int)text3[10]] ^ m3[(int)text3[11]];
+    temp[14]= text3[12] ^ text3[13] ^ m2[(int)text3[14]] ^ m3[(int)text3[15]];
 
-    //4th row
-    temp[12]= m3[(int)text3[0]] ^ text3[4] ^ text3[8] ^ m2[(int)text3[12]];
-    temp[13]= m3[(int)text3[1]] ^ text3[5] ^ text3[9] ^ m2[(int)text3[13]];
-    temp[14]= m3[(int)text3[2]] ^ text3[6] ^ text3[10] ^ m2[(int)text3[14]];
-    temp[15]= m3[(int)text3[3]] ^ text3[7] ^ text3[11] ^ m2[(int)text3[15]];
+    //4th column
+    temp[3]= m3[(int)text3[0]] ^ text3[1] ^ text3[2] ^ m2[(int)text3[3]];
+    temp[7]= m3[(int)text3[4]] ^ text3[5] ^ text3[6] ^ m2[(int)text3[7]];
+    temp[11]= m3[(int)text3[8]] ^ text3[9] ^ text3[10] ^ m2[(int)text3[11]];
+    temp[15]= m3[(int)text3[12]] ^ text3[13] ^ text3[14] ^ m2[(int)text3[15]];
 
     for(int l=0;l<16;l++)
     { text3[l]=temp[l];
@@ -163,11 +190,62 @@ void mixcolumns(unsigned char *text3)
 
 
 
-void AES()
-{xor(cipher,key);
- sbox(cipher);
- shiftrow(cipher);
-  mixcolumns(cipher);
+void keyexpansion(unsigned char *key0, int z)
+{ unsigned char temp[16];
+
+//1st column
+
+temp[0]=s[(int)key0[13]]^key0[0]^rcon[z];
+temp[1]=s[(int)key0[14]]^key0[1];
+temp[2]=s[(int)key0[15]]^key0[2];
+temp[3]=s[(int)key0[12]]^key0[3];
+
+//2nd column
+temp[4]=temp[0]^key0[4];
+temp[5]=temp[1]^key0[5];
+temp[6]=temp[2]^key0[6];
+temp[7]=temp[3]^key0[7];
+
+//3rd column
+temp[8]=temp[4]^key0[8];
+temp[9]=temp[5]^key0[9];
+temp[10]=temp[6]^key0[10];
+temp[11]=temp[7]^key0[11];
+
+//4th column
+temp[12]=temp[8]^key0[12];
+temp[13]=temp[9]^key0[13];
+temp[14]=temp[10]^key0[14];
+temp[15]=temp[11]^key0[15];
+
+for(int a=0;a<16;a++)
+{
+  key0[a]=temp[a];
+}
+
+
+}
+
+
+
+void aes()
+{
+
+    roundkey(cipher,key);              //1st round
+ 
+   for(int y=0;y<9;y++)                //9 rounds
+    {
+       subbytes(cipher);
+       shiftrow(cipher);
+       mixcolumns(cipher);
+       keyexpansion(key,y);
+       roundkey(cipher,key);
+    }
+
+    subbytes(cipher);                 //final round
+    shiftrow(cipher);
+    keyexpansion(key,9);
+    roundkey(cipher,key);
 
 }
 
