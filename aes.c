@@ -1,3 +1,5 @@
+#include<stdio.h>
+
 void subbytes(unsigned char *text1);
 void roundkey(unsigned char *text,unsigned char *key1);
 void mixcolumns(unsigned char *text3);
@@ -117,9 +119,9 @@ void subbytes(unsigned char *text1)
 void shiftrow(unsigned char *text2)
 { unsigned char temp[16];
 
- 
+
  temp[0]=text2[0];                                        //1st row, nothing happens
- temp[1]=text2[5];                                         //2nd row, 1 shift  
+ temp[1]=text2[5];                                         //2nd row, 1 shift
  temp[2]=text2[10];                                        //3rd row, 2 shift
  temp[3]=text2[15];                                        //4th row, 3 shift
 
@@ -130,14 +132,14 @@ void shiftrow(unsigned char *text2)
   temp[6]=text2[14];
   temp[7]=text2[3];
 
-  
+
 
   temp[8]=text2[8];
   temp[9]=text2[13];
   temp[10]=text2[2];
   temp[11]=text2[7];
 
-  
+
 
   temp[12]=text2[12];
   temp[13]=text2[1];
@@ -232,7 +234,7 @@ void aes(unsigned char *cipher)
 {
 
     roundkey(cipher,key);              //1st round
- 
+
    for(int y=0;y<9;y++)                //9 rounds
     {
        subbytes(cipher);
@@ -246,6 +248,7 @@ void aes(unsigned char *cipher)
     shiftrow(cipher);
     keyexpansion(key,9);
     roundkey(cipher,key);
+
 
 }
 
