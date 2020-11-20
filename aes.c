@@ -1,4 +1,7 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
 
 void subbytes(unsigned char *text1);
 void roundkey(unsigned char *text,unsigned char *key1);
@@ -9,7 +12,7 @@ void shiftrow(unsigned char *text2);
 
 
 
-unsigned char key[16]={0x41,0x41,0x41,0x41,0x41,0x41,0x31,0x31,0x31,0x31,0x31,0x31,0x71,0x71,0x71,0x71};
+
 
 
 
@@ -232,6 +235,8 @@ for(int a=0;a<16;a++)
 
 void aes(unsigned char *cipher)
 {
+unsigned char key[16]={0x41,0x41,0x41,0x41,0x41,0x41,0x31,0x31,0x31,0x31,0x31,0x31,0x71,0x71,0x71,0x71};
+
 
     roundkey(cipher,key);              //1st round
 
@@ -242,12 +247,14 @@ void aes(unsigned char *cipher)
        mixcolumns(cipher);
        keyexpansion(key,y);
        roundkey(cipher,key);
+
     }
 
     subbytes(cipher);                 //final round
     shiftrow(cipher);
     keyexpansion(key,9);
     roundkey(cipher,key);
+
 
 
 }

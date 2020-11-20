@@ -11,10 +11,8 @@ void newbytes();
 void bitchanger();
 void compression();
 
-//First 32 bits of square root of first 8 prime numbers
-//formula= hex(2^32(squareroot(number)))
 
-uint32_t h[8]={0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19};
+uint32_t h[8];
 
 
 
@@ -59,8 +57,8 @@ void newbytes()
 
 
 //this is the main function which generates the hash
-void compression()
-{uint32_t a[8]={h[0],h[1],h[2],h[3],h[4],h[5],h[6],h[7]};
+void compression(uint32_t *h1)
+{uint32_t a[8]={h1[0],h1[1],h1[2],h1[3],h1[4],h1[5],h1[6],h1[7]};
 
 
  for(int j=0;j<64;j++)
@@ -83,20 +81,25 @@ void compression()
 
  }
 
- h[0]=h[0]+a[0];
- h[1]=h[1]+a[1];
- h[2]=h[2]+a[2];
- h[3]=h[3]+a[3];
- h[4]=h[4]+a[4];
- h[5]=h[5]+a[5];
- h[6]=h[6]+a[6];
- h[7]=h[7]+a[7];
+ h[0]=h1[0]+a[0];
+ h[1]=h1[1]+a[1];
+ h[2]=h1[2]+a[2];
+ h[3]=h1[3]+a[3];
+ h[4]=h1[4]+a[4];
+ h[5]=h1[5]+a[5];
+ h[6]=h1[6]+a[6];
+ h[7]=h1[7]+a[7];
 
 
 }
 
 void hashing(unsigned char *cipher)
 {
+
+//First 32 bits of square root of first 8 prime numbers
+//formula= hex(2^32(squareroot(number)))
+uint32_t h1[8]={0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19};
+
    for(int i=0;i<64;i++)
     {   if(i<16)
       {arr[i]=(int) cipher[i];}
@@ -111,7 +114,7 @@ void hashing(unsigned char *cipher)
 
     bitchanger();
     newbytes();
-    compression();
+    compression(h1);
 
 
 }
