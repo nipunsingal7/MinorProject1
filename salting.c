@@ -8,7 +8,6 @@ int binary[32];
 int test,value1;
 int lower=35,upper=126;
 FILE *fp;
-char p[64];
 
 void salt()
 {
@@ -68,9 +67,11 @@ void salt()
 
 
 void salting(uint32_t *h)
-{fp=fopen("salt.bin","ab+");
+{int number;
 
-FILE *hfp=fopen("password","a");
+fp=fopen("salt.bin","ab+");
+
+FILE *hfp=fopen("password.txt","a");
 
   if(hfp==NULL)
   {printf("\n error..file cannot be open");}
@@ -85,34 +86,7 @@ FILE *hfp=fopen("password","a");
 for(int k=0;k<32;k++)
   { fprintf(fp," %d",binary[k]); }
 
-
-  for(int y=0,l=0;y<32;y++,l+=2)
-{   int temp,t=1+l;
-
-    int number=(int)arr1[y];
-    while(number!=0)
-    {
-
-         temp=number%16;
-
-         if(temp<10)
-         {p[t]=temp+48;
-           t--;
-         }
-
-         else
-         {p[t]=temp+55;
-             t--;
-         }
-
-         number=number/16;
-
-    }
-
-}
-
-
-fseek(hfp,0,SEEK_END);
+  fseek(hfp,0,SEEK_END);
 
   if(ftell(hfp)!=0)
   {fprintf(hfp,"\n");}
@@ -121,9 +95,12 @@ fseek(hfp,0,SEEK_END);
   for(int q=0;q<8;q++)
   {fprintf(hfp,"%x",h[q]);
    printf("%x",h[q]);}
-  for(int f=0;f<64;f++)
-  {fprintf(hfp,"%c",p[f]);
-   printf("%c",p[f]);}
+
+  for(int f=0;f<32;f++)
+  {number=(int)arr1[f];
+  fprintf(hfp,"%x",number);
+   printf("%x",number);}
+
 
   fclose(hfp);
 
