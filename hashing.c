@@ -31,6 +31,7 @@ uint32_t k[64]= {
 
 
 
+
 //this function converts four 8bits elements to one 32bit element
 void bitchanger()
 {
