@@ -158,6 +158,8 @@ void display3()
 
 int main()
 {char a;
+ FILE *abc=fopen("name.txt","a");
+ fclose(abc);
  display();
 scanf("%c",&a);
 system("clear");
