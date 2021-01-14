@@ -22,11 +22,27 @@ void display()
 
 }
 
-void check()
-{ FILE *fp0=fopen("name.txt","r");
+int check()
+{ int cnt=0;
+  FILE *fp0=fopen("name.txt","r");
   memset(name,'\0',sizeof(name));
   printf("Enter the UserName: ");
   scanf("%s",&name);
+ 
+ for(int u=0;u<strlen(name);u++)
+{
+    if((int)name[0]==95 || (int)name[u]>=33 && (int)name[u]<=47 || (int)name[u]>=58 && (int)name[u]<=64 || (int)name[u]>=91 && (int)name[u]<=94 || (int)name[u]==96 || (int)name[u]>=123 && (int)name[u]<=126 )
+    
+    { printf("username can only contain numbers and letters and underscore sign. Username cannot start with special character\n\n");
+      check();
+       cnt=1;
+       break;}
+    
+
+}
+   
+    if(cnt==1)
+    {return(0);}
 
    while(!feof(fp0))
   {
@@ -40,7 +56,7 @@ void check()
 
    }
 
-
+ return 0;
 }
 
 
