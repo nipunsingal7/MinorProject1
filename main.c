@@ -17,7 +17,7 @@ void display()
 {printf("\n\n\n\n\n\t\t\t\t\t\t\t\t    Welcome To\t\t\t\t\t\t\t\t\t");
  printf("\n\n\n\n\t\t\t\t\t\t\tHIGH DELIVERABLE PASS-CODE SYSTEM\t\t\t\t\t\t\t");
  printf("\n\n\n\n\n\n\n\n\t\t\t\t\t\t  Don't worry we will secure passwords for you\t\t\t\t\t\t");
- printf("\n\n\n\n\n\n\n\n\n\n\tDeveloped By:\n\tNipun Singal\n\tMadhav Bhatia\n\tRajat Panwar\n\tIshita Bansal");
+ printf("\n\n\n\n\n\n\n\n\n\n\n\n\tDeveloped By:\n\tNipun Singal");
  printf("\n\n\t\t\t\t\t\t\t\t\t\t\t\t\tPress enter to continue......");
 
 }
@@ -29,10 +29,20 @@ int check()
   printf("Enter the UserName: ");
   scanf("%s",&name);
  
- for(int u=0;u<strlen(name);u++)
-{
-    if((int)name[0]==95 || (int)name[u]>=33 && (int)name[u]<=47 || (int)name[u]>=58 && (int)name[u]<=64 || (int)name[u]>=91 && (int)name[u]<=94 || (int)name[u]==96 || (int)name[u]>=123 && (int)name[u]<=126 )
+ if(!((int)name[0]>=65 && (int)name[0]<=90 || (int)name[0]>=97 && (int)name[0]<=122 ) )
+	   { printf("username can only contain numbers and letters and underscore sign. Username cannot start with special character\n\n");
+      check();
+       cnt=1;
+       break;}
     
+    if(cnt==1)
+    {return(0);}
+
+ 
+ for(int u=0;u<strlen(name);u++)
+{   int ab=(int)name[u];
+   
+    if(!(ab>=65 && ab<=90 || ab>=97 && ab<=122 || ab>=48 && ab<=57 || ab==95) )
     { printf("username can only contain numbers and letters and underscore sign. Username cannot start with special character\n\n");
       check();
        cnt=1;
