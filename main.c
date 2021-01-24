@@ -32,8 +32,7 @@ int check()
  if(!((int)name[0]>=65 && (int)name[0]<=90 || (int)name[0]>=97 && (int)name[0]<=122 ) )
 	   { printf("username can only contain numbers and letters and underscore sign. Username cannot start with special character\n\n");
       check();
-       cnt=1;
-       break;}
+       cnt=1;}
     
     if(cnt==1)
     {return(0);}
